@@ -128,7 +128,7 @@ class Store extends Observable {
   /**
    * this is the Entry point to the Shop's working day.
    * we receive the array of customers' servingTimes here.
-   * @param {*} customers
+   * @param {Array} customers
    */
   serveCustomers(customers) {
     if (!Array.isArray(customers)) {
@@ -145,8 +145,8 @@ class Store extends Observable {
       return 0;
     } else if (this.tills == 1) {
     /**
-     * In case if only one single Till is open, total time to serve all the customers would be
-     * the sum of sirving time to each of them.
+     * if in case there is only one single Till open, then total time to serve all the customers would be
+     * the sum of serving time for each of them.
      */
       return this.customers.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
@@ -154,12 +154,14 @@ class Store extends Observable {
       );
     } else if (this.customers.length < this.tills) {
     /**
-     * if number of tills available biger then number of customers:
+     * if number of tills available biger then number of customers,
+     * then max time required for serving all customers will be sort of Max(customers)
      */
       return Math.max.apply(null, this.customers);
     } else {
     /**
-     * Load all free Tills fith some first customers:
+     * Load all free Tills fith some first customers,
+     * and GET TO THE WORK, NOW!!! :)))
      */
       for (var i = 0; i < this.observers.length; i++) {
         this.observers[i].newCustomer(this.customers.splice(0, 1)[0]);
@@ -167,19 +169,15 @@ class Store extends Observable {
     }
 
     /**
-     * Store administrator might not to know how many tills are currently open,
+     * Store administrator might not know how many tills are currently open,
      * he/she still needs to check if all shop assistants are back from changing/smoking rooms and ready for work.
      * but he commands to open all tills that are ready right now.
      */
     var i = 0;
-    while (
-      this.observers.filter(observer => observer.servingTime > 0).length > 0 ||
-      this.customers.length > 0
-    ) {
+    while (this.observers.filter(observer => observer.servingTime > 0).length > 0) {
       i++;
       this.notifyAllObservers(this);
     }
-
     return i;
   }
 }
@@ -199,19 +197,20 @@ function queueTime(customers, tills) {
 }
 
 /**
- * Test:
+ * Simple test:
  */
-
 queueTime([], 1); // Expected: 0
 queueTime([1, 2, 3, 4], 1); // Expected: 10
 queueTime([2, 2, 3, 3, 4, 4], 2); // Expected: 9
 queueTime([1, 2, 3, 4, 5], 100); // Expected: 5
 
+/**
+ * Harder ones:
+ */
 queueTime(
     [43,46,4,29,19,30,46,7,33,26,24],
     6
 ); // Expected: 59
-
 
 queueTime(
     [7,13,2,2,20,6,17,5,6,4,11,6,10,18,17,17,3,4,10,7,17,2,6,4,11,7,6,16,10,20,13,16,6,7,9,8,9,4,3,1,15,13,5,5,11,10,4,6,4,5,19,16,7,1,18,10,11,11,20,11,15,17,12,6,6,9,5,17,3,1,5,8,9,8,8,14,8,11,8,18,6,12,15,12,1,6,5,15,13,2,14,8,4,14,18,13,18,7,10,16,16,5,16,19,18,4,7,10,9,15,11,11,20,2,2,3,1,12,1,19,11,16,10,12,5,12,19,8,15,16,19,16,9,2,9,10,15,4,19],
