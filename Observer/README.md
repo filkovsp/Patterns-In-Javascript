@@ -27,7 +27,7 @@ EDIT: A lot of people have been confused in the comments. To try to prevent any 
 - The diagram on the wiki page I linked to at the bottom of the description may be useful.
 
 So, for example:
-```
+```Javascript
 queueTime([5,3,4], 1)
 // should return 12
 // because when n=1, the total time is just the sum of the times
