@@ -1,3 +1,4 @@
+```
 /**
  * This is sort of "Observer Abstraction", for Observer pattern.
  * to implement this pattern here we only check if every client (our observer)
@@ -8,7 +9,8 @@
  * https://www.codewars.com/kata/57b06f90e298a7b53d000a86
  * 
  */
- 
+```
+
 There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
 
 The function has two input variables:
@@ -25,7 +27,7 @@ EDIT: A lot of people have been confused in the comments. To try to prevent any 
 - The diagram on the wiki page I linked to at the bottom of the description may be useful.
 
 So, for example:
-
+```
 queueTime([5,3,4], 1)
 // should return 12
 // because when n=1, the total time is just the sum of the times
@@ -37,6 +39,6 @@ queueTime([10,2,3,3], 2)
 
 queueTime([2,3,10], 2)
 // should return 12
-
+```
 N.B. You should assume that all the test input will be valid, as specified above.
 P.S. The situation in this kata can be likened to the more-computer-science-related idea of a thread pool, with relation to running multiple processes at the same time: [Thread pool](https://en.wikipedia.org/wiki/Thread_pool)
