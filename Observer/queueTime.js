@@ -152,7 +152,7 @@ class Store extends Observable {
         (accumulator, currentValue) => accumulator + currentValue,
         0
       );
-    } else if (this.customers.length =< this.tills) {
+    } else if (this.customers.length <= this.tills) {
     /**
      * if number of tills available biger then number of customers,
      * then max time required for serving all customers will be sort of Max(customers)
