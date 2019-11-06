@@ -4,7 +4,7 @@
  * > npm install uuid
  * then you are ready to use it
  */
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
 /**
  * Price List object Consists of:
@@ -34,7 +34,7 @@ const PriceList = {
  */
 class Order {
     constructor() {
-        this.id = uuidv1();
+        this.id = uuidv4();
         this.date = new Date();
         this.beverages = new Array();
     }
@@ -70,7 +70,7 @@ class Order {
 class Beverage {
     constructor(type) {
         if (PriceList.Beverages.hasOwnProperty(type)) {
-            this.id = uuidv1();
+            this.id = uuidv4();
             this.beverageType = type;
             this.beveragePrice = PriceList.Beverages[type];
             this.condiments = new Array();
