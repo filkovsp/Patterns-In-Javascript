@@ -26,33 +26,35 @@ const PriceList = {
 
 /**
  * instance of the Order class has list of Beverages in it.
- * it also responcible for applying special discount offer on a given day of the week,
- * which is Thurthday in our case down here.
- * This is a simplified example for the discount logic.
- * In real life we might have 6 cups of Beverages. Then 4 of them must be discounted to 0-price.
- * Current logic will apply discount for only 2 of them.
+ * it also responsible for applying special discount offer.
  */
 class Order {
     constructor() {
         this.id = uuidv4();
         this.date = new Date();
-        this.beverages = new Array();
+        this.items = new Array();
+        this.discount = 0;
     }
 
-    addbeverage(beverage) {
-        if (this.date.getDay() == 4 && this.beverages.length > 0 && this.beverages.length < 3) {
-            beverage.applyDiscount(1);
-        }
-        this.beverages.push(beverage);
+    addItem(beverage, quantity) {
+        this.items.push({"beverage":beverage, "quantity":quantity});
     }
 
-    removebeverage(beverage) {
-        this.beverages.pop(beverage);
+    removeItem(beverage, quantity) {
+        this.items.forEach(function(item){
+            if(item.beverage.id == beverage.id) {
+                if (item.quantity == quantity) {
+                    this.items.pop(item);
+                } else {
+                    item.quantity -= quantity;
+                }
+            }
+        });
     }
 
     getTotalAmount() {
         var amount = 0;
-        this.beverages.forEach(beverage => amount += beverage.getPrice());
+        this.items.forEach(item => amount += (item.beverage.getPrice() * item.quantity));
         // we round up our amount to the 2nd decimal point:
         return Math.round(amount * 100) / 100
     }
@@ -148,7 +150,8 @@ var beverage2 = new Beverage("Tea");
 beverage2.addCondiment("Milk");
 
 var order = new Order();
-order.addbeverage(beverage1);
-order.addbeverage(beverage2);
+order.addItem(beverage1, 1);
+order.addItem(beverage2, 3);
+order.removeItem(beverage2, 2);
 
 console.log("Total amount = " + order.getTotalAmount());
