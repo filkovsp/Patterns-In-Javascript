@@ -1,1 +1,1 @@
-# Patterns-In-Javascript
+# Patterns In Javascript
